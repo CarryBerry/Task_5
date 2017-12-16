@@ -67,13 +67,17 @@
     <Compile Include="BusinessLayer\DTO\ProductDTO.cs" />
     <Compile Include="BusinessLayer\DTO\ShopAssistantDTO.cs" />
     <Compile Include="BusinessLayer\IService.cs" />
-    <Compile Include="BusinessLayer\Logger.cs" />
+    <Compile Include="BusinessLayer\Monitor.cs" />
     <Compile Include="BusinessLayer\Parser.cs" />
     <Compile Include="BusinessLayer\Service.cs" />
     <Compile Include="BusinessLayer\Saver.cs" />
     <Compile Include="DAL\IGenericRepository.cs" />
     <Compile Include="DAL\IUnitOfWork.cs" />
     <Compile Include="DAL\Models\Entity.cs" />
+    <Compile Include="DAL\Repositories\CustomerRepository.cs" />
+    <Compile Include="DAL\Repositories\OrderRepository.cs" />
+    <Compile Include="DAL\Repositories\ProductRepository.cs" />
+    <Compile Include="DAL\Repositories\ShopAssistantRepository.cs" />
     <Compile Include="DAL\Repository.cs" />
     <Compile Include="DAL\Models\Customer.cs" />
     <Compile Include="DAL\Models\Order.cs" />
@@ -82,7 +86,6 @@
     <Compile Include="DAL\EFUnitOfWork.cs" />
     <Compile Include="EntityModels\CustomerDTO.cs" />
     <Compile Include="EntityModels\OrderDTO.cs" />
-    <Compile Include="EntityModels\Person.cs" />
     <Compile Include="EntityModels\ProductDTO.cs" />
     <Compile Include="EntityModels\ShopAssistantDTO.cs" />
     <Compile Include="EntityModels\UsersContext.cs" />

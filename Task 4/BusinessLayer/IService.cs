@@ -10,11 +10,11 @@ namespace Task_4.BusinessLayer
     public interface IService
     {
         void AddOrder(OrderDTO orderDto);
-        ShopAssistantDTO GetShopAssistant(int? id);
+        ShopAssistantDTO GetShopAssistant(int id);
         IEnumerable<ShopAssistantDTO> GetShopAssistants();
-        CustomerDTO GetCustomer(int? id);
+        CustomerDTO GetCustomer(int id);
         IEnumerable<CustomerDTO> GetCustomers();
-        ProductDTO GetProduct(int? id);
+        ProductDTO GetProduct(int id);
         IEnumerable<ProductDTO> GetProducts();
         void Dispose();
     }

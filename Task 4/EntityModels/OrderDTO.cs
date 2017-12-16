@@ -17,7 +17,7 @@ namespace Task_4.Models
         [DataType(DataType.Date)]
         [Display(Name = "Order Date")]
         public DateTime OrderDate { get; set; }
-        
-        public virtual ICollection<Product> Products { get; set; }
+        public double Price { get; set; }
+        public int Amount { get; set; }
     }
 }

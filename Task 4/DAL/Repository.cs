@@ -9,7 +9,7 @@ using Task_4.Models;
 
 namespace Task_4.DAL
 {
-    public class Repository<TEntity> : IGenericRepository<TEntity> where TEntity : Entity
+    public class Repository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         private UsersContext context;
         private DbSet<TEntity> dbSet;
@@ -49,17 +49,18 @@ namespace Task_4.DAL
             return dbSet.Where(predicate).ToList();
         }
 
-        public int? GetId(TEntity item)
+        public virtual int? GetId(TEntity item)
         {
-            var tmp = dbSet.FirstOrDefault(x => (x.Id == item.Id));
-            if (tmp == null)
-            {
-                return null;
-            }
-            else
-            {
-                return tmp.Id;
-            }
+            throw new NotImplementedException();
+            //var tmp = dbSet.FirstOrDefault(x => (x.Id == item.Id));
+            //if (tmp == null)
+            //{
+            //    return null;
+            //}
+            //else
+            //{
+            //    return tmp.Id;
+            //}
         }
 
         public void Update(TEntity item)

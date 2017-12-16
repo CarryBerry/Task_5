@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Task_4.DAL.Models;
+using Task_4.DAL.Repositories;
 using Task_4.Models;
 
 namespace Task_4.DAL
@@ -17,47 +18,58 @@ namespace Task_4.DAL
             _db = new UsersContext();
         }
 
-        private Repository<ShopAssistantDAL> _ShopAssistantRepository;
-        private Repository<CustomerDAL> _CustomerRepository;
-        private Repository<ProductDAL> _productRepository;
-        private Repository<OrderDAL> _orderRepository;
+        private ShopAssistantRepository _ShopAssistantRepository;
+        private CustomerRepository _CustomerRepository;
+        private ProductRepository _productRepository;
+        //private Repository<OrderDAL> _orderRepository;
+        private OrderRepository _orderRepository;
 
-        public IGenericRepository<ProductDAL> Products
+        public ProductRepository Products
         {
             get
             {
                 if (_productRepository == null)
-                    _productRepository = new Repository<ProductDAL>(_db);
+                    _productRepository = new ProductRepository(_db);
                 return _productRepository;
             }
         }
 
-        public IGenericRepository<ShopAssistantDAL> ShopAssistants
+        public ShopAssistantRepository ShopAssistants
         {
             get
             {
                 if (_ShopAssistantRepository == null)
-                    _ShopAssistantRepository = new Repository<ShopAssistantDAL>(_db);
+                    _ShopAssistantRepository = new ShopAssistantRepository(_db);
                 return _ShopAssistantRepository;
             }
         }
 
-        public IGenericRepository<CustomerDAL> Customers
+        public CustomerRepository Customers
         {
             get
             {
                 if (_CustomerRepository == null)
-                    _CustomerRepository = new Repository<CustomerDAL>(_db);
+                    _CustomerRepository = new Repositories.CustomerRepository(_db);
                 return _CustomerRepository;
             }
         }
 
-        public IGenericRepository<OrderDAL> Orders
+        //public IGenericRepository<OrderDAL> Orders
+        //{
+        //    get
+        //    {
+        //        if (_orderRepository == null)
+        //            _orderRepository = new Repository<OrderDAL>(_db);
+        //        return _orderRepository;
+        //    }
+        //}
+
+        public OrderRepository Orders
         {
             get
             {
                 if (_orderRepository == null)
-                    _orderRepository = new Repository<OrderDAL>(_db);
+                    _orderRepository = new OrderRepository(_db);
                 return _orderRepository;
             }
         }

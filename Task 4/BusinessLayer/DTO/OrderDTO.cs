@@ -12,6 +12,7 @@ namespace Task_4.BusinessLayer.DTO
         public string ShopAssistant { get; set; }
         public string Customer { get; set; }
         public string Product { get; set; }
+        public int Amount { get; set; }
         public double Price { get; set; }
     }
 }

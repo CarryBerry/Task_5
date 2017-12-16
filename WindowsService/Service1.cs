@@ -14,7 +14,7 @@ namespace WindowsService
 {
     public partial class Service1 : ServiceBase
     {
-        Logger logger;
+        Task_4.BusinessLayer.Monitor logger;
         public Service1()
         {
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace WindowsService
         protected override void OnStart(string[] args)
         {
             System.Diagnostics.Debugger.Launch();
-            logger = new Logger();
+            logger = new Task_4.BusinessLayer.Monitor();
             Thread loggerThread = new Thread(logger.Start);
             loggerThread.Start();
         }

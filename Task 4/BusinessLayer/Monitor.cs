@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Task_4.BusinessLayer
 {
-    public class Logger
+    public class Monitor
     {
         private readonly FileSystemWatcher _watcher;
         private readonly Saver _saver;
@@ -17,7 +17,7 @@ namespace Task_4.BusinessLayer
         private readonly object _obj = new object(); 
         private bool actionStopper = true;
 
-        public Logger()
+        public Monitor()
         {
             _saver = new Saver();
             _watcher = new FileSystemWatcher();

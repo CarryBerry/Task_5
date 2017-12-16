@@ -13,36 +13,37 @@ namespace Task_4.BusinessLayer
     {
         public IEnumerable<OrderDTO> ParseData(string path)
         {
-            //Ivanov_19112012.csv
             string shopAssistantName = Path.GetFileName(path).Split('_').First();
+            //DateTime dateOfOrder = Convert.ToDateTime(Path.GetFileName(path).Split('_').Last());
             IList<OrderDTO> history = new List<OrderDTO>();
 
             string[] tapes;
 
-            try
-            {
+            //try
+            //{
                 using (StreamReader sr = new StreamReader(path))
                 {
                     while (!sr.EndOfStream)
                     {
-                        tapes = sr.ReadLine().Split(',');//Дата,Клиент,Товар,Сумма
-                                                         //OrderDTO order = new OrderDTO() { }
-                        history.Add(new OrderDTO()
+                        tapes = sr.ReadLine().Split(',');
+                                                         
+                        history.Add(new OrderDTO() // OrderDate, CustomerName, ProductName, Price, AmountOfProduct
                         {
-                            OrderDate = DateTime.Parse(tapes[0]),
+                            OrderDate = /*dateOfOrder*/Convert.ToDateTime(tapes[0]),
                             ShopAssistant = shopAssistantName,
                             Customer = tapes[1],
                             Product = tapes[2],
-                            Price = double.Parse(tapes[3])
+                            Price = Convert.ToDouble(tapes[3]),
+                            Amount = Convert.ToInt32(tapes[4])
                         });
                     }
                 }
-            }
+            //}
 
-            catch (Exception e)
-            {
-                throw new Exception();
-            }
+            //catch (Exception e)
+            //{
+            //    throw new Exception();
+            //}
 
             return history;
             }

@@ -17,8 +17,8 @@ namespace Task_4
                 Customer user1 = new Customer { CustomerName = "Tomas" };
                 ShopAssistant ShopAssistant1 = new ShopAssistant { ShopAssistantName = "Samson" };
 
-                db.Customers.Remove(user1);
-                db.ShopAssistants.Remove(ShopAssistant1);
+                db.Customers.Add(user1);
+                db.ShopAssistants.Add(ShopAssistant1);
                 db.SaveChanges();
             }
         }

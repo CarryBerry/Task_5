@@ -18,5 +18,6 @@ namespace Task_4.Models
         public DbSet<ShopAssistant> ShopAssistants { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
+
     }
 }
