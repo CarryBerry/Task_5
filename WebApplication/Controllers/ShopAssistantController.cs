@@ -1,24 +1,20 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Task_4.DAL;
-using WebApplication.Models;
-using Task_4;
-using WebApplication.Models.DTO;
-using PagedList;
 using Task_4.DAL.Models;
-using AutoMapper;
-using System.Data;
+using WebApplication.Models;
+using WebApplication.Models.DTO;
 
 namespace WebApplication.Controllers
 {
-    public class CustomerController : Controller
+    public class ShopAssistantController : Controller
     {
-        //EFUnitOfWork database = new EFUnitOfWork();
-
-        // GET: Customer
+        //// GET: ShopAssistant
         //public ActionResult Index()
         //{
         //    return View();
@@ -42,60 +38,60 @@ namespace WebApplication.Controllers
             }
             ViewBag.CurrentFilter = searchString;
 
-            var customers = from customer in service.GetCustomers()
-                           select customer;
+            var shopAssistants = from shopAssistant in service.GetShopAssistants()
+                            select shopAssistant;
             if (!String.IsNullOrEmpty(searchString))
             {
-                customers = customers.Where(x => x.CustomerName.ToUpper().Contains(searchString.ToUpper()));
+                shopAssistants = shopAssistants.Where(x => x.ShopAssistantName.ToUpper().Contains(searchString.ToUpper()));
             }
             switch (sortOrder)
             {
                 case "name_desc":
-                    customers = customers.OrderByDescending(s => s.CustomerName);
+                    shopAssistants = shopAssistants.OrderByDescending(s => s.ShopAssistantName);
                     break;
                 case "Id":
-                    customers = customers.OrderBy(s => s.Id);
+                    shopAssistants = shopAssistants.OrderBy(s => s.Id);
                     break;
                 case "Id_desc":
-                    customers = customers.OrderByDescending(s => s.Id);
+                    shopAssistants = shopAssistants.OrderByDescending(s => s.Id);
                     break;
                 default:  // Name ascending 
-                    customers = customers.OrderBy(s => s.CustomerName);
+                    shopAssistants = shopAssistants.OrderBy(s => s.ShopAssistantName);
                     break;
             }
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-            return View(customers.ToPagedList(pageNumber, pageSize));
+            return View(shopAssistants.ToPagedList(pageNumber, pageSize));
         }
 
         //
-        // GET: /Customer/Details/5
+        // GET: /ShopAssistant/Details/5
 
         public ViewResult Details(int id)
         {
             Service service = new Service();
-            var customer = service.GetCustomer(id);
-            return View(customer);
+            var shopAssistant = service.GetShopAssistant(id);
+            return View(shopAssistant);
         }
 
         //
-        // POST: /Customer/Create
+        // POST: /ShopAssistant/Create
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerName")]CustomerDTO customerDTO)
+        public ActionResult Create([Bind(Include = "shopAssistantName")]ShopAssistantDTO shopAssistantDTO)
         {
             IUnitOfWork database = new EFUnitOfWork();
 
-            var customer = new CustomerDAL {CustomerName = customerDTO.CustomerName, Id = customerDTO.Id };
+            var shopAssistant = new ShopAssistantDAL { ShopAssistantName = shopAssistantDTO.ShopAssistantName, Id = shopAssistantDTO.Id };
 
             try
             {
                 if (ModelState.IsValid)
                 {
-                    database.Customers.Insert(customer);
-                    database.Customers.Save();
+                    database.ShopAssistants.Insert(shopAssistant);
+                    database.ShopAssistants.Save();
                     return RedirectToAction("Index");
                 }
             }
@@ -106,36 +102,36 @@ namespace WebApplication.Controllers
                 ModelState.AddModelError(string.Empty, "Unable to save changes. Try again, and if the problem persists contact your system administrator.");
             }
 
-            return View(customerDTO);
+            return View(shopAssistantDTO);
         }
 
         //
-        // GET: /Customer/Edit/5
+        // GET: /ShopAssistant/Edit/5
 
         public ActionResult Edit(int id)
         {
             Service service = new Service();
-            CustomerDTO customer = service.GetCustomer(id);
-            return View(customer);
+            ShopAssistantDTO shopAssistan = service.GetShopAssistant(id);
+            return View(shopAssistan);
         }
 
         //
-        // POST: /Customer/Edit/5
+        // POST: /ShopAssistant/Edit/5
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerName")]CustomerDTO customerDTO)
+        public ActionResult Edit([Bind(Include = "ShopAssistantName")]ShopAssistantDTO shopAssistanDTO)
         {
             IUnitOfWork database = new EFUnitOfWork();
 
-            var customer = new CustomerDAL { CustomerName = customerDTO.CustomerName, Id = customerDTO.Id };
+            var shopAssistan = new ShopAssistantDAL { ShopAssistantName = shopAssistanDTO.ShopAssistantName, Id = shopAssistanDTO.Id };
 
             try
             {
                 if (ModelState.IsValid)
                 {
-                    database.Customers.Update(customer);
-                    database.Customers.Save();
+                    database.ShopAssistants.Update(shopAssistan);
+                    database.ShopAssistants.Save();
                     return RedirectToAction("Index");
                 }
             }
@@ -144,11 +140,11 @@ namespace WebApplication.Controllers
                 //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
                 ModelState.AddModelError(string.Empty, "Unable to save changes. Try again, and if the problem persists contact your system administrator.");
             }
-            return View(customerDTO);
+            return View(shopAssistanDTO);
         }
 
         //
-        // GET: /Customer/Delete/5
+        // GET: /ShopAssistant/Delete/5
 
         public ActionResult Delete(bool? saveChangesError = false, int id = 0)
         {
@@ -159,12 +155,12 @@ namespace WebApplication.Controllers
                 ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
             }
 
-            CustomerDTO customer = service.GetCustomer(id);
-            return View(customer);
+            ShopAssistantDTO shopAssistan = service.GetShopAssistant(id);
+            return View(shopAssistan);
         }
 
         //
-        // POST: /Customer/Delete/5
+        // POST: /ShopAssistant/Delete/5
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
@@ -173,13 +169,13 @@ namespace WebApplication.Controllers
             Service service = new Service();
             IUnitOfWork database = new EFUnitOfWork();
 
-            CustomerDTO customerDTO = service.GetCustomer(id);
-            var customer = new CustomerDAL { CustomerName = customerDTO.CustomerName, Id = customerDTO.Id };
+            ShopAssistantDTO shopAssistanDTO = service.GetShopAssistant(id);
+            var shopAssistan = new ShopAssistantDAL { ShopAssistantName = shopAssistanDTO.ShopAssistantName, Id = shopAssistanDTO.Id };
 
             try
             {
-                database.Customers.Delete(id);
-                database.Customers.Save();
+                database.ShopAssistants.Delete(id);
+                database.ShopAssistants.Save();
             }
 
             catch (DataException /* dex */)

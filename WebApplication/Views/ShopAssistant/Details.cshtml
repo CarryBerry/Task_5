@@ -1,0 +1,30 @@
+﻿@using WebApplication.Models.DTO;
+@model ShopAssistantDTO
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>ShopAssistant</legend>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => Model.Id)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => Model.Id)
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => Model.ShopAssistantName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => Model.ShopAssistantName)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

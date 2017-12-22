@@ -1,10 +1,10 @@
 ﻿@using WebApplication.Models.DTO;
 @using PagedList.Mvc;
-@model PagedList.IPagedList<CustomerDTO>
+@model PagedList.IPagedList<ShopAssistantDTO>
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Customers"; 
+    ViewBag.Title = "ShopAssistants";
 }
 
 <h2>Customers</h2>
@@ -12,7 +12,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-@using (Html.BeginForm("Index", "Customer", FormMethod.Get))
+@using (Html.BeginForm("Index", "ShopAssistant", FormMethod.Get))
 {
     <p>
         Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
@@ -42,7 +42,7 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CustomerName) 
+                @Html.DisplayFor(modelItem => item.ShopAssistantName)
             </td>
         </tr>
     }

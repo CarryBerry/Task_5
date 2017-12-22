@@ -92,16 +92,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLayer\DTO\CustomerDTO.cs" />
-    <Compile Include="BusinessLayer\DTO\DTO.cs" />
-    <Compile Include="BusinessLayer\DTO\OrderDTO.cs" />
-    <Compile Include="BusinessLayer\DTO\ProductDTO.cs" />
-    <Compile Include="BusinessLayer\DTO\ShopAssistantDTO.cs" />
-    <Compile Include="BusinessLayer\IService.cs" />
-    <Compile Include="BusinessLayer\Monitor.cs" />
-    <Compile Include="BusinessLayer\Parser.cs" />
-    <Compile Include="BusinessLayer\Service.cs" />
-    <Compile Include="BusinessLayer\Saver.cs" />
     <Compile Include="DAL\IGenericRepository.cs" />
     <Compile Include="DAL\IUnitOfWork.cs" />
     <Compile Include="DAL\Models\Entity.cs" />

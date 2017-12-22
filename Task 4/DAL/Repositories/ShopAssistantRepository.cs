@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,25 +47,59 @@ namespace Task_4.DAL.Repositories
                 return tmp.ShopAssistantId;
             }
         }
+        
+        public IEnumerable<ShopAssistantDAL> GetAll()
+        {
+            return context.ShopAssistants.Select(x => new ShopAssistantDAL() { Id = x.ShopAssistantId, ShopAssistantName = x.ShopAssistantName }).ToArray();
+        }
 
-        public new void Insert(ShopAssistantDAL item)
+        public ShopAssistantDAL GetById(int Id)
+        {
+            return ToObject(context.ShopAssistants.FirstOrDefault(x => (x.ShopAssistantId == Id)));
+        }
+
+        public void Insert(ShopAssistantDAL item)
         {
             context.ShopAssistants.Add(ToEntity(item));
         }
-
-        public new IEnumerable<ShopAssistantDAL> GetAll()
+        public void Delete(int id)
         {
-            return context.ShopAssistants.Select(c => new ShopAssistantDAL() { Id = c.ShopAssistantId, ShopAssistantName = c.ShopAssistantName }).ToArray();
+            ShopAssistant item = context.ShopAssistants.Find(id);
+            if (item != null)
+            {
+                context.ShopAssistants.Remove(item);
+            }
         }
 
-        public new ShopAssistantDAL GetById(int Id)
+        public void Update(ShopAssistantDAL item) 
         {
-            return ToObject(context.ShopAssistants.FirstOrDefault(c => (c.ShopAssistantId == Id)));
+            context.ShopAssistants.AddOrUpdate(ToEntity(item));
+            //context.Entry(ToEntity(item)).State = EntityState.Modified;
         }
 
-        public void Update(ShopAssistant item)
+        public void Save()
         {
-            context.Entry(item).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

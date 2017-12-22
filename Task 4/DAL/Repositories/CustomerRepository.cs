@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,7 +73,8 @@ namespace Task_4.DAL.Repositories
 
         public void Update(CustomerDAL item)
         {
-            context.Entry(ToEntity(item)).State = EntityState.Modified;
+            context.Customers.AddOrUpdate(ToEntity(item));
+            //context.Entry(ToEntity(item)).State = EntityState.Modified;
         }
 
         public void Save()

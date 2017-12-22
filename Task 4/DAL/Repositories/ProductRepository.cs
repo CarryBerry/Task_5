@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,27 +57,27 @@ namespace Task_4.DAL.Repositories
             };
         }
 
-        public new void Insert(ProductDAL item)
+        public void Insert(ProductDAL item)
         {
             context.Products.Add(ToEntity(item));
         }
 
-        public new IEnumerable<ProductDAL> GetAll()
+        public IEnumerable<ProductDAL> GetAll()
         {
             return context.Products
                 .Select(x => new ProductDAL() { Id = x.ProductId, ProductName = x.ProductName }).ToArray();
         }
 
-        public new ProductDAL GetById(int Id)
+        public ProductDAL GetById(int Id)
         {
             return ToObject(context.Products
                 .FirstOrDefault(x => (x.ProductId == Id)));
         }
 
-        public void Update(Product item)
+        public void Update(ProductDAL item)
         {
-            context.Entry(item)
-                .State = EntityState.Modified;
+            context.Products.AddOrUpdate(ToEntity(item));
+            //context.Entry(ToEntity(item)).State = EntityState.Modified;
         }
     }
 }

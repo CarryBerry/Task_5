@@ -1,0 +1,43 @@
+﻿@using WebApplication.Models.DTO;
+@model ShopAssistantDTO
+
+@{
+    ViewBag.Title = "Delete";
+}
+<p class="error">@ViewBag.ErrorMessage</p>
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this record?</h3>
+<fieldset>
+    <legend>ShopAssistant</legend>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => Model.Id)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => Model.Id)
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => Model.ShopAssistantName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => Model.ShopAssistantName)
+    </div>
+
+    @*<div class="display-label">
+        @Html.DisplayNameFor(model => Model.CustomerName)
+    </div>*@
+    @*<div class="display-field">
+        @Html.DisplayFor(model => Model.CustomerName)
+    </div>*@
+</fieldset>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
