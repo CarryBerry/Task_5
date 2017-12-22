@@ -11,66 +11,66 @@ namespace Task_4.DAL
 {
     public class Repository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private UsersContext context;
-        private DbSet<TEntity> dbSet;
+        //private UsersContext context;
+        //private DbSet<TEntity> dbSet;
 
-        public Repository(UsersContext context)
-        {
-            this.context = context;
-            this.dbSet = context.Set<TEntity>();
-        }
+        //public Repository(UsersContext context)
+        //{
+        //    this.context = context;
+        //    this.dbSet = context.Set<TEntity>();
+        //}
 
-        public IEnumerable<TEntity> GetAll()
-        {
-            return dbSet.ToList();
-        }
+        //public IEnumerable<TEntity> GetAll()
+        //{
+        //    return dbSet.ToList();
+        //}
 
-        public TEntity GetById(int id)
-        {
-            return dbSet.Find(id);
-        }
+        //public TEntity GetById(int id)
+        //{
+        //    return dbSet.Find(id);
+        //}
 
-        public void Insert(TEntity item)
-        {
-            dbSet.Add(item);
-        }
+        //public void Insert(TEntity item)
+        //{
+        //    dbSet.Add(item);
+        //}
 
-        public void Delete(int id)
-        {
-            TEntity item = dbSet.Find(id);
-            if (item != null)
-            {
-                dbSet.Remove(item);
-            }
-        }
+        //public void Delete(int id)
+        //{
+        //    TEntity item = dbSet.Find(id);
+        //    if (item != null)
+        //    {
+        //        dbSet.Remove(item);
+        //    }
+        //}
 
-        public IEnumerable<TEntity> Find(Func<TEntity, Boolean> predicate)
-        {
-            return dbSet.Where(predicate).ToList();
-        }
+        //public IEnumerable<TEntity> Find(Func<TEntity, Boolean> predicate)
+        //{
+        //    return dbSet.Where(predicate).ToList();
+        //}
 
-        public virtual int? GetId(TEntity item)
-        {
-            throw new NotImplementedException();
-            //var tmp = dbSet.FirstOrDefault(x => (x.Id == item.Id));
-            //if (tmp == null)
-            //{
-            //    return null;
-            //}
-            //else
-            //{
-            //    return tmp.Id;
-            //}
-        }
+        //public virtual int? GetId(TEntity item)
+        //{
+        //    throw new NotImplementedException();
+        //    //var tmp = dbSet.FirstOrDefault(x => (x.Id == item.Id));
+        //    //if (tmp == null)
+        //    //{
+        //    //    return null;
+        //    //}
+        //    //else
+        //    //{
+        //    //    return tmp.Id;
+        //    //}
+        //}
 
-        public void Update(TEntity item)
-        {
-            context.Entry(item).State = EntityState.Modified;
-        }
+        //public void Update(TEntity item)
+        //{
+        //    context.Entry(item).State = EntityState.Modified;
+        //}
 
-        public void Save()
-        {
-            context.SaveChanges();
-        }
+        //public void Save()
+        //{
+        //    context.SaveChanges();
+        //}
     }
 }

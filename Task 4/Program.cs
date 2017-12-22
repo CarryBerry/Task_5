@@ -14,11 +14,15 @@ namespace Task_4
         {
             using (UsersContext db = new UsersContext())
             {
-                Customer user1 = new Customer { CustomerName = "Tomas" };
-                ShopAssistant ShopAssistant1 = new ShopAssistant { ShopAssistantName = "Samson" };
+                Customer user1 = new Customer { CustomerName = "Tomas", CustomerId = 1};
+                ShopAssistant ShopAssistant1 = new ShopAssistant { ShopAssistantName = "Samson", ShopAssistantId = 1, HireDate = DateTime.Now };
+                Product product1 = new Product { ProductName = "Mozarella", ProductId = 1, ProductPrice = 50 };
+                Order order1 = new Order { OrderDate = DateTime.Now, ProductId = 1, Amount = 1, CustomerId = 1, OrderId = 1, Price = 50, ShopAssistantId = 1 };
 
                 db.Customers.Add(user1);
                 db.ShopAssistants.Add(ShopAssistant1);
+                db.Products.Add(product1);
+                db.Orders.Add(order1);
                 db.SaveChanges();
             }
         }

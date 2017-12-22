@@ -10,18 +10,18 @@ using Task_4.Models;
 
 namespace Task_4.DAL.Repositories
 {
-    public class CustomerRepository : Repository<CustomerDAL>
+    public class CustomerRepository : IDisposable/*Repository<CustomerDAL>*/
     {
         private UsersContext context;
         private DbSet<CustomerDAL> dbSet;
 
-        public CustomerRepository(UsersContext context) : base(context)
+        public CustomerRepository(UsersContext context) /*: base(context)*/
         {
             this.context = context;
             this.dbSet = context.Set<CustomerDAL>();
         }
 
-        public override int? GetId(CustomerDAL item)
+        public int? GetId(CustomerDAL item)
         {
             var tmp = context.Customers.FirstOrDefault(x => (x.CustomerName == item.CustomerName));
             if (tmp == null)
@@ -46,24 +46,58 @@ namespace Task_4.DAL.Repositories
             return mapper.Map<Customer, CustomerDAL>(source);
         }
 
-        public new void Insert(CustomerDAL item)
-        {
-            context.Customers.Add(ToEntity(item));
-        }
-
-        public new IEnumerable<CustomerDAL> GetAll()
+        public IEnumerable<CustomerDAL> GetAll()
         {
             return context.Customers.Select(x => new CustomerDAL() { Id = x.CustomerId, CustomerName = x.CustomerName }).ToArray();
         }
 
-        public new CustomerDAL GetById(int Id)
+        public CustomerDAL GetById(int Id)
         {
             return ToObject(context.Customers.FirstOrDefault(x => (x.CustomerId == Id)));
         }
 
-        public void Update(Customer item)
+        public void Insert(CustomerDAL item)
         {
-            context.Entry(item).State = EntityState.Modified;
+            context.Customers.Add(ToEntity(item));
+        }
+
+        public void Delete(int id)
+        {
+            Customer item = context.Customers.Find(id);
+            if (item != null)
+            {
+                context.Customers.Remove(item);
+            }
+        }
+
+        public void Update(CustomerDAL item)
+        {
+            context.Entry(ToEntity(item)).State = EntityState.Modified;
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

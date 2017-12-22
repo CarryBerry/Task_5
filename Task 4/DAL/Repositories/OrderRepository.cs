@@ -15,7 +15,7 @@ namespace Task_4.DAL.Repositories
         private UsersContext context;
         private DbSet<OrderDAL> dbSet;
 
-        public OrderRepository(UsersContext context) : base(context)
+        public OrderRepository(UsersContext context) /*: base(context)*/
         {
             this.context = context;
             this.dbSet = context.Set<OrderDAL>();

@@ -16,7 +16,7 @@ namespace Task_4.DAL.Repositories
         private UsersContext context;
         private DbSet<ShopAssistantDAL> dbSet;
 
-        public ShopAssistantRepository(UsersContext context) : base(context)
+        public ShopAssistantRepository(UsersContext context) /*: base(context)*/
         {
             this.context = context;
             this.dbSet = context.Set<ShopAssistantDAL>();
@@ -34,7 +34,7 @@ namespace Task_4.DAL.Repositories
             return mapper.Map<ShopAssistant, ShopAssistantDAL>(source);
         }
 
-        public override int? GetId(ShopAssistantDAL item)
+        public int? GetId(ShopAssistantDAL item)
         {
             var tmp = context.ShopAssistants.FirstOrDefault(x => (x.ShopAssistantName == item.ShopAssistantName));
             if (tmp == null)

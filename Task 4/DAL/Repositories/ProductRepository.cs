@@ -15,13 +15,13 @@ namespace Task_4.DAL.Repositories
         private UsersContext context;
         private DbSet<ProductDAL> dbSet;
 
-        public ProductRepository(UsersContext context) : base(context)
+        public ProductRepository(UsersContext context) /*: base(context)*/
         {
             this.context = context;
             this.dbSet = context.Set<ProductDAL>();
         }
 
-        public override int? GetId(ProductDAL item)
+        public int? GetId(ProductDAL item)
         {
             var tmp = context.Products.FirstOrDefault(x => (x.ProductName == item.ProductName));
             if (tmp == null)
