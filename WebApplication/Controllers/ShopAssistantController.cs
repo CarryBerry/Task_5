@@ -13,13 +13,7 @@ using WebApplication.Models.DTO;
 namespace WebApplication.Controllers
 {
     public class ShopAssistantController : Controller
-    {
-        //// GET: ShopAssistant
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
+    {       
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             Service service = new Service();
@@ -76,11 +70,19 @@ namespace WebApplication.Controllers
         }
 
         //
+        // GET: ShopAssistant/Create
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        //
         // POST: /ShopAssistant/Create
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "shopAssistantName")]ShopAssistantDTO shopAssistantDTO)
+        public ActionResult Create([Bind(Include = "ShopAssistantName")]ShopAssistantDTO shopAssistantDTO)
         {
             IUnitOfWork database = new EFUnitOfWork();
 

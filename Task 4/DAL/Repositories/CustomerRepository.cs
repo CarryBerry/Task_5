@@ -35,16 +35,56 @@ namespace Task_4.DAL.Repositories
             }
         }
 
+        public int? GetIdByName(string name)
+        {
+            var tmp = context.Customers.FirstOrDefault(x => (x.CustomerName == name));
+            if (tmp == null)
+            {
+                return null;
+            }
+            else
+            {
+                return tmp.CustomerId;
+            }
+        }
+
         public Customer ToEntity(CustomerDAL source)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CustomerDAL, Customer>()).CreateMapper();
-            return mapper.Map<CustomerDAL, Customer>(source);
+            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CustomerDAL, Customer>().ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Id))).CreateMapper();
+            //return mapper.Map<CustomerDAL, Customer>(source);
+
+            //          Mapper.Initialize(cfg =>
+            //cfg.CreateMap<CustomerDAL, Customer>()
+            //  .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Id))
+            //  .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.CustomerName)));
+
+            //          return Mapper.Map<CustomerDAL, Customer>(source);
+
+
+            return new Customer()
+            {
+                CustomerId = source.Id,
+                CustomerName = source.CustomerName
+            };
         }
 
         public CustomerDAL ToObject(Customer source)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Customer, CustomerDAL>()).CreateMapper();
-            return mapper.Map<Customer, CustomerDAL>(source);
+            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Customer, CustomerDAL>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CustomerId))).CreateMapper();
+            //return mapper.Map<Customer, CustomerDAL>(source);
+
+            //          Mapper.Initialize(cfg =>
+            //cfg.CreateMap<Customer, CustomerDAL>()
+            //  .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CustomerId))
+            //  .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.CustomerName)));
+
+            //          return Mapper.Map<Customer, CustomerDAL>(source);
+
+            return new CustomerDAL()
+            {
+                Id = source.CustomerId,
+                CustomerName = source.CustomerName
+            };
         }
 
         public IEnumerable<CustomerDAL> GetAll()

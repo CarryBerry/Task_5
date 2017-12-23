@@ -1,5 +1,5 @@
 ﻿@using WebApplication.Models.DTO;
-@model ShopAssistantDTO
+@model ProductDTO
 
 
 @{
@@ -14,7 +14,7 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>ShopAssistant</legend>
+        <legend>Product</legend>
 
         @Html.HiddenFor(model => Model.Id)
 
@@ -27,20 +27,20 @@
         </div>*@
 
         <div class="editor-label">
-            @Html.LabelFor(model => Model.ShopAssistantName)
+            @Html.LabelFor(model => Model.ProductName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => Model.ShopAssistantName)
-            @Html.ValidationMessageFor(model => Model.ShopAssistantName)
+            @Html.EditorFor(model => Model.ProductName)
+            @Html.ValidationMessageFor(model => Model.ProductName)
         </div>
 
-        @*<div class="editor-label">
-                @Html.LabelFor(model => Model.)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => Model.CustomerName)
-                @Html.ValidationMessageFor(model => Model.CustomerName)
-            </div>*@
+        <div class="editor-label">
+            @Html.LabelFor(model => Model.ProductPrice)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => Model.ProductPrice)
+            @Html.ValidationMessageFor(model => Model.ProductPrice)
+        </div>
 
         <p>
             <input type="submit" value="Save" />
@@ -55,6 +55,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-
 

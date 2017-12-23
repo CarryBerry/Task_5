@@ -8,6 +8,6 @@ namespace WebApplication.Models.DTO
     public class ProductDTO : DTO
     {
         public string ProductName { get; set; }
-        public string ProductPrice { get; set; }
+        public double ProductPrice { get; set; }
     }
 }

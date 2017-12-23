@@ -69,6 +69,7 @@ namespace WebApplication.Models
                     Price = orderDTO.Price,
                     Amount = orderDTO.Amount
                 };
+
                 database.Orders.Insert(order);
                 database.Save();
             }
@@ -165,8 +166,57 @@ namespace WebApplication.Models
 
         public IEnumerable<ProductDTO> GetProducts()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDAL, ProductDTO>()).CreateMapper();
-            return Mapper.Map<IEnumerable<ProductDAL>, List<ProductDTO>>(database.Products.GetAll());
+            var list = new List<ProductDTO>();
+
+            //return database.Products.GetAll() as IEnumerable<ProductDTO>;
+
+            for (int i = 1; i <= database.Products.GetAll().Count(); i++)
+                list.Add(new ProductDTO
+                {
+                    ProductName = GetProduct(i).ProductName,
+                    ProductPrice = GetProduct(i).ProductPrice
+                });
+            return list.AsEnumerable();
+
+            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDAL, ProductDTO>()).CreateMapper();
+            //return Mapper.Map<IEnumerable<ProductDAL>, List<ProductDTO>>(product);
+        }
+        
+        public OrderDTO GetOrder(int id)
+        {
+            var order = database.Orders.GetById(id/*.Value*/);
+            var product = database.Products.GetById(id);
+            var customer = database.Customers.GetById(id);
+            var shopAssistant = database.ShopAssistants.GetById(id);
+
+            return new OrderDTO()
+            {
+                Id = order.Id,
+                OrderDate = order.OrderDate,
+                ShopAssistant = shopAssistant.ShopAssistantName,
+                Customer = customer.CustomerName,
+                Product = product.ProductName,
+                Amount = order.Amount,
+                Price = order.Price
+            };
+        }
+
+        public IEnumerable<OrderDTO> GetOrders()
+        {
+            var list = new List<OrderDTO>();
+            //int n = database.Orders.GetAll().Count();
+            for (int i = 1; i <= database.Orders.GetAll().Count(); i++)
+                list.Add(new OrderDTO
+                {
+                    OrderDate = GetOrder(i).OrderDate,
+                    Id = GetOrder(i).Id,
+                    Amount = GetOrder(i).Amount,
+                    Customer = GetOrder(i).Customer,
+                    Price = GetOrder(i).Price,
+                    Product = GetOrder(i).Product,
+                    ShopAssistant = GetOrder(i).ShopAssistant
+                });
+            return list.AsEnumerable();
         }
 
         public void Dispose()

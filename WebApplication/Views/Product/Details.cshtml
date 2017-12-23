@@ -1,0 +1,56 @@
+﻿@using WebApplication.Models.DTO;
+@model ProductDTO
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Product</legend>
+
+    <div class="display-label">
+        <strong>@Html.DisplayNameFor(model => Model.Id)</strong>
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => Model.Id)
+    </div>
+
+    <div class="display-label">
+        <strong>@Html.DisplayNameFor(model => Model.ProductName)</strong>
+</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => Model.ProductName)
+    </div>
+
+    <div class="display-label">
+        <strong>@Html.DisplayNameFor(model => Model.ProductPrice)</strong>
+</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => Model.ProductPrice)
+        </div>
+    @*<div class="display-field">
+            <table>
+                <tr>
+                    <th>Course Title</th>
+                    <th>Grade</th>
+                </tr>
+                @foreach (var item in Model.Enrollments)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Course.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Grade)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>*@
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

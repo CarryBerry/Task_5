@@ -1,0 +1,71 @@
+﻿@using WebApplication.Models.DTO;
+@model OrderDTO
+
+@{
+    ViewBag.Title = "Delete";
+}
+<p class="error">@ViewBag.ErrorMessage</p>
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this record?</h3>
+<fieldset>
+    <legend>Order</legend>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => Model.OrderDate)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => Model.OrderDate)
+        @Html.ValidationMessageFor(model => Model.OrderDate)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => Model.Customer)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => Model.Customer)
+        @Html.ValidationMessageFor(model => Model.Customer)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => Model.ShopAssistant)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => Model.ShopAssistant)
+        @Html.ValidationMessageFor(model => Model.ShopAssistant)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => Model.Product)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => Model.Product)
+        @Html.ValidationMessageFor(model => Model.Product)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => Model.Amount)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => Model.Amount)
+        @Html.ValidationMessageFor(model => Model.Amount)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => Model.Price)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => Model.Price)
+        @Html.ValidationMessageFor(model => Model.Price)
+    </div>
+
+</fieldset>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

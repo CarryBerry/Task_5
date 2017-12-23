@@ -25,14 +25,24 @@ namespace Task_4.DAL.Repositories
 
         public ShopAssistant ToEntity(ShopAssistantDAL source)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ShopAssistantDAL, ShopAssistant>()).CreateMapper();
-            return mapper.Map<ShopAssistantDAL, ShopAssistant>(source);
+            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ShopAssistantDAL, ShopAssistant>()).CreateMapper();
+            //return mapper.Map<ShopAssistantDAL, ShopAssistant>(source);
+            return new ShopAssistant()
+            {
+                ShopAssistantId = source.Id,
+                ShopAssistantName = source.ShopAssistantName
+            };
         }
 
         public ShopAssistantDAL ToObject(ShopAssistant source)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ShopAssistant, ShopAssistantDAL>()).CreateMapper();
-            return mapper.Map<ShopAssistant, ShopAssistantDAL>(source);
+            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ShopAssistant, ShopAssistantDAL>()).CreateMapper();
+            //return mapper.Map<ShopAssistant, ShopAssistantDAL>(source);
+            return new ShopAssistantDAL()
+            {
+                Id = source.ShopAssistantId,
+                ShopAssistantName = source.ShopAssistantName
+            };
         }
 
         public int? GetId(ShopAssistantDAL item)
@@ -47,7 +57,19 @@ namespace Task_4.DAL.Repositories
                 return tmp.ShopAssistantId;
             }
         }
-        
+        public int? GetIdByName(string name)
+        {
+            var tmp = context.ShopAssistants.FirstOrDefault(x => (x.ShopAssistantName == name));
+            if (tmp == null)
+            {
+                return null;
+            }
+            else
+            {
+                return tmp.ShopAssistantId;
+            }
+        }
+
         public IEnumerable<ShopAssistantDAL> GetAll()
         {
             return context.ShopAssistants.Select(x => new ShopAssistantDAL() { Id = x.ShopAssistantId, ShopAssistantName = x.ShopAssistantName }).ToArray();

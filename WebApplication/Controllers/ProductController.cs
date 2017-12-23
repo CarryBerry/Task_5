@@ -1,20 +1,18 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Task_4.DAL;
-using WebApplication.Models;
-using Task_4;
-using WebApplication.Models.DTO;
-using PagedList;
 using Task_4.DAL.Models;
-using AutoMapper;
-using System.Data;
+using WebApplication.Models;
+using WebApplication.Models.DTO;
 
 namespace WebApplication.Controllers
 {
-    public class CustomerController : Controller
+    public class ProductController : Controller
     {        
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -23,42 +21,53 @@ namespace WebApplication.Controllers
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.IdSortParm = sortOrder == "Id" ? "Id_desc" : "Id";
+            ViewBag.PriceSortParm = sortOrder == "Price" ? "Price_desc" : "Price";
 
             if (searchString != null)
             {
                 page = 1;
             }
+
             else
             {
                 searchString = currentFilter;
             }
+
             ViewBag.CurrentFilter = searchString;
 
-            var customers = from customer in service.GetCustomers()
-                           select customer;
+            var products = from product in service.GetProducts()
+                            select product;
+
             if (!String.IsNullOrEmpty(searchString))
             {
-                customers = customers.Where(x => x.CustomerName.ToUpper().Contains(searchString.ToUpper()));
+                products = products.Where(x => x.ProductName.ToUpper().Contains(searchString.ToUpper()));
             }
+
             switch (sortOrder)
             {
                 case "name_desc":
-                    customers = customers.OrderByDescending(s => s.CustomerName);
+                    products = products.OrderByDescending(s => s.ProductName);
                     break;
                 case "Id":
-                    customers = customers.OrderBy(s => s.Id);
+                    products = products.OrderBy(s => s.Id);
                     break;
                 case "Id_desc":
-                    customers = customers.OrderByDescending(s => s.Id);
+                    products = products.OrderByDescending(s => s.Id);
+                    break;
+                case "Price":
+                    products = products.OrderBy(s => s.ProductPrice);
+                    break;
+                case "Price_desc":
+                    products = products.OrderByDescending(s => s.ProductPrice);
                     break;
                 default:  // Name ascending 
-                    customers = customers.OrderBy(s => s.CustomerName);
+                    products = products.OrderBy(s => s.ProductName);
                     break;
             }
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-            return View(customers.ToPagedList(pageNumber, pageSize));
+            return View(products.ToPagedList(pageNumber, pageSize));
         }
 
         //
@@ -67,13 +76,11 @@ namespace WebApplication.Controllers
         public ViewResult Details(int id)
         {
             Service service = new Service();
-            var customer = service.GetCustomer(id);
-            return View(customer);
+            var product = service.GetProduct(id);
+            return View(product);
         }
 
-        //
-        // GET: /Customer/Create
-
+        //// GET: Product/Create
         public ActionResult Create()
         {
             return View();
@@ -84,18 +91,18 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerName")]CustomerDTO customerDTO)
+        public ActionResult Create([Bind(Include = "ProductName, ProductPrice")]ProductDTO productDTO)
         {
             IUnitOfWork database = new EFUnitOfWork();
 
-            var customer = new CustomerDAL {CustomerName = customerDTO.CustomerName, Id = customerDTO.Id };
+            var product = new ProductDAL { Id = productDTO.Id, ProductName = productDTO.ProductName, ProductPrice = productDTO.ProductPrice};
 
             try
             {
                 if (ModelState.IsValid)
                 {
-                    database.Customers.Insert(customer);
-                    database.Customers.Save();
+                    database.Products.Insert(product);
+                    database.Products.Save();
                     return RedirectToAction("Index");
                 }
             }
@@ -106,17 +113,17 @@ namespace WebApplication.Controllers
                 ModelState.AddModelError(string.Empty, "Unable to save changes. Try again, and if the problem persists contact your system administrator.");
             }
 
-            return View(customerDTO);
+            return View(productDTO);
         }
 
-        //
-        // GET: /Customer/Edit/5
+
+        //GET: /Customer/Edit/5
 
         public ActionResult Edit(int id)
         {
             Service service = new Service();
-            CustomerDTO customer = service.GetCustomer(id);
-            return View(customer);
+            ProductDTO product = service.GetProduct(id);
+            return View(product);
         }
 
         //
@@ -124,18 +131,18 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerName")]CustomerDTO customerDTO)
+        public ActionResult Edit([Bind(Include = "ProductName, ProductPrice")]ProductDTO productDTO)
         {
             IUnitOfWork database = new EFUnitOfWork();
 
-            var customer = new CustomerDAL { CustomerName = customerDTO.CustomerName, Id = customerDTO.Id };
+            var product = new ProductDAL { Id = productDTO.Id, ProductName = productDTO.ProductName,  ProductPrice = productDTO.ProductPrice };
 
             try
             {
                 if (ModelState.IsValid)
                 {
-                    database.Customers.Update(customer);
-                    database.Customers.Save();
+                    database.Products.Update(product);
+                    database.Products.Save();
                     return RedirectToAction("Index");
                 }
             }
@@ -144,7 +151,7 @@ namespace WebApplication.Controllers
                 //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
                 ModelState.AddModelError(string.Empty, "Unable to save changes. Try again, and if the problem persists contact your system administrator.");
             }
-            return View(customerDTO);
+            return View(productDTO);
         }
 
         //
@@ -159,8 +166,8 @@ namespace WebApplication.Controllers
                 ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
             }
 
-            CustomerDTO customer = service.GetCustomer(id);
-            return View(customer);
+            ProductDTO product = service.GetProduct(id);
+            return View(product);
         }
 
         //
@@ -173,13 +180,13 @@ namespace WebApplication.Controllers
             Service service = new Service();
             IUnitOfWork database = new EFUnitOfWork();
 
-            CustomerDTO customerDTO = service.GetCustomer(id);
-            var customer = new CustomerDAL { CustomerName = customerDTO.CustomerName, Id = customerDTO.Id };
+            ProductDTO productDTO = service.GetProduct(id);
+            var product = new ProductDAL { ProductName = productDTO.ProductName, Id = productDTO.Id, ProductPrice = productDTO.ProductPrice };
 
             try
             {
-                database.Customers.Delete(id);
-                database.Customers.Save();
+                database.Products.Delete(id);
+                database.Products.Save();
             }
 
             catch (DataException /* dex */)

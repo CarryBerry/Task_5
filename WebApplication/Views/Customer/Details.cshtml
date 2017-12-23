@@ -11,39 +11,32 @@
     <legend>Customer</legend>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => Model.Id)
+            <strong>@Html.DisplayNameFor(model => Model.Id)</strong>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => Model.Id)
     </div>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => Model.CustomerName)
+        <strong>@Html.DisplayNameFor(model => Model.CustomerName)</strong>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => Model.CustomerName)
     </div>
 
-    @*<div class="display-label">
-        @Html.DisplayNameFor(model => Model.CustomerName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => Model.CustomerName)
-    </div>*@
     @*<div class="display-field">
         <table>
             <tr>
-                <th>Course Title</th>
-                <th>Grade</th>
+                <th>Id</th>
+                <th>Name</th>
             </tr>
-            @foreach (var item in Model.Enrollments)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Course.Title)
+                        @Html.DisplayFor(modelItem => Model.Id)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Grade)
+                        @Html.DisplayFor(modelItem => Model.CustomerName)
                     </td>
                 </tr>
             }
@@ -54,3 +47,9 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+@*<div class="display-label">
+        @Html.DisplayNameFor(model => Model.CustomerName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => Model.CustomerName)
+    </div>*@
