@@ -11,7 +11,7 @@ namespace WebApplication.Models
     public class UserContext : DbContext
     {
         public UserContext()
-            : base("DefaultConnection")
+            : base("name=DefaultConnection")
         {
         }
 

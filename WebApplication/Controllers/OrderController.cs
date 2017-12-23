@@ -119,7 +119,7 @@ namespace WebApplication.Controllers
         // POST: /Order/Create
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OrderDate, Cusomer, ShopAssistant, Amount, Price")]OrderDTO orderDTO)
         {
             IUnitOfWork database = new EFUnitOfWork();
@@ -172,7 +172,7 @@ namespace WebApplication.Controllers
         // POST: /Order/Edit/5
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "OrderDate, Cusomer, ShopAssistant, Amount, Price")]OrderDTO orderDTO)
         {
             IUnitOfWork database = new EFUnitOfWork();
@@ -229,7 +229,7 @@ namespace WebApplication.Controllers
         // POST: /Order/Delete/5
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             Service service = new Service();

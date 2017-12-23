@@ -29,11 +29,11 @@ namespace WebApplication.Models
                 var product = new ProductDAL()
                 {
                     ProductName = orderDTO.Product,
-                    //    if (orderDto.Amount == 0)
-                    //{
-                    //    throw new DivideByZeroException();
-                    //}
-                    ProductPrice = orderDTO.Price / orderDTO.Amount
+                //        if (orderDto.Amount == 0)
+                //{
+                //    throw new DivideByZeroException();
+                //}
+                ProductPrice = orderDTO.Price / orderDTO.Amount
                 };
 
                 var ShopAssistantId = database.ShopAssistants.GetId(ShopAssistant);
@@ -74,61 +74,6 @@ namespace WebApplication.Models
                 database.Save();
             }
         }
-
-        //public void UpdateOrder(OrderDTO orderDTO)
-        //{
-        //    var ShopAssistant = new ShopAssistantDAL() { ShopAssistantName = orderDTO.ShopAssistant };
-        //    var customer = new CustomerDAL() { CustomerName = orderDTO.Customer };
-        //    var product = new ProductDAL()
-        //    {
-        //        ProductName = orderDTO.Product,
-        //        //    if (orderDto.Amount == 0)
-        //        //{
-        //        //    throw new DivideByZeroException();
-        //        //}
-        //        ProductPrice = orderDTO.Price / orderDTO.Amount
-        //    };
-
-            //var ShopAssistantId = database.ShopAssistants.GetId(ShopAssistant);
-            //if (ShopAssistantId == null)
-            //{
-            //    database.ShopAssistants.Insert(ShopAssistant);
-            //    database.Save();
-            //    ShopAssistantId = database.ShopAssistants.GetId(ShopAssistant);
-            //}
-
-            //var managerId = _repositories.Managers.GetId(manager);
-            //if (managerId == null)
-            //{
-            //    _repositories.Managers.Add(manager);
-            //    _repositories.Save();
-            //    managerId = _repositories.Managers.GetId(manager);
-            //}
-
-            //var clientId = _repositories.Clients.GetId(client);
-            //if (clientId == null)
-            //{
-            //    _repositories.Clients.Add(client);
-            //    _repositories.Save();
-            //    clientId = _repositories.Clients.GetId(client);
-            //}
-
-            //var productId = _repositories.Products.GetId(product);
-            //if (productId == null)
-            //{
-            //    _repositories.Products.Add(product);
-            //    _repositories.Save();
-            //    productId = _repositories.Products.GetId(product);
-            //}
-
-            //var saleInfo = new DAL.Models.SaleInfo()
-            //{
-            //    Date = orderDTO.Date,
-            //    ManagerId = (int)managerId,
-            //    ClientId = (int)clientId,
-            //    ProductId = (int)productId,
-            //    Amount = orderDTO.Amount
-            //};
 
         public ShopAssistantDTO GetShopAssistant(int id)
         {
@@ -173,6 +118,7 @@ namespace WebApplication.Models
             for (int i = 1; i <= database.Products.GetAll().Count(); i++)
                 list.Add(new ProductDTO
                 {
+                    Id = GetProduct(i).Id,
                     ProductName = GetProduct(i).ProductName,
                     ProductPrice = GetProduct(i).ProductPrice
                 });
