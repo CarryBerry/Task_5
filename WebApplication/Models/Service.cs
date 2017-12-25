@@ -26,6 +26,7 @@ namespace WebApplication.Models
             {
                 var ShopAssistant = new ShopAssistantDAL() { ShopAssistantName = orderDTO.ShopAssistant };
                 var customer = new CustomerDAL() { CustomerName = orderDTO.Customer };
+                //var orderDate = new OrderDAL() { OrderDate = orderDTO.OrderDate };
                 var product = new ProductDAL()
                 {
                     ProductName = orderDTO.Product,
@@ -60,12 +61,24 @@ namespace WebApplication.Models
                     productId = database.Products.GetId(product);
                 }
 
+                if (orderDTO.OrderDate.Year == 1)
+                {
+                    orderDTO.OrderDate = DateTime.Now;
+                }
+
+                if (orderDTO.Id == 0)
+                {
+                    var last = database.Orders.GetAll().Last();
+                    orderDTO.Id = last.Id + 1;
+                }
+
                 OrderDAL order = new OrderDAL
                 {
+                    Id = orderDTO.Id,
                     OrderDate = orderDTO.OrderDate,
-                    ShopAssistantId = ShopAssistant.Id,
-                    CustomerId = customer.Id,
-                    ProductId = product.Id,
+                    ShopAssistantId = ShopAssistantId.Value,
+                    CustomerId = CustomerId.Value,
+                    ProductId = productId.Value,
                     Price = orderDTO.Price,
                     Amount = orderDTO.Amount
                 };
@@ -115,12 +128,12 @@ namespace WebApplication.Models
 
             //return database.Products.GetAll() as IEnumerable<ProductDTO>;
 
-            for (int i = 1; i <= database.Products.GetAll().Count(); i++)
+            foreach (var product in database.Products.GetAll())
                 list.Add(new ProductDTO
                 {
-                    Id = GetProduct(i).Id,
-                    ProductName = GetProduct(i).ProductName,
-                    ProductPrice = GetProduct(i).ProductPrice
+                    Id = GetProduct(product.Id).Id,
+                    ProductName = GetProduct(product.Id).ProductName,
+                    ProductPrice = GetProduct(product.Id).ProductPrice
                 });
             return list.AsEnumerable();
 
@@ -131,9 +144,9 @@ namespace WebApplication.Models
         public OrderDTO GetOrder(int id)
         {
             var order = database.Orders.GetById(id/*.Value*/);
-            var product = database.Products.GetById(id);
-            var customer = database.Customers.GetById(id);
-            var shopAssistant = database.ShopAssistants.GetById(id);
+            var product = database.Products.GetById(order.ProductId);
+            var customer = database.Customers.GetById(order.CustomerId);
+            var shopAssistant = database.ShopAssistants.GetById(order.ShopAssistantId);
 
             return new OrderDTO()
             {
@@ -150,18 +163,32 @@ namespace WebApplication.Models
         public IEnumerable<OrderDTO> GetOrders()
         {
             var list = new List<OrderDTO>();
+
             //int n = database.Orders.GetAll().Count();
-            for (int i = 1; i <= database.Orders.GetAll().Count(); i++)
+            foreach (var order in database.Orders.GetAll())
+            {
                 list.Add(new OrderDTO
                 {
-                    OrderDate = GetOrder(i).OrderDate,
-                    Id = GetOrder(i).Id,
-                    Amount = GetOrder(i).Amount,
-                    Customer = GetOrder(i).Customer,
-                    Price = GetOrder(i).Price,
-                    Product = GetOrder(i).Product,
-                    ShopAssistant = GetOrder(i).ShopAssistant
+                    OrderDate = GetOrder(order.Id).OrderDate,
+                    Id = GetOrder(order.Id).Id,
+                    Amount = GetOrder(order.Id).Amount,
+                    Customer = GetOrder(order.Id).Customer,
+                    Price = GetOrder(order.Id).Price,
+                    Product = GetOrder(order.Id).Product,
+                    ShopAssistant = GetOrder(order.Id).ShopAssistant
                 });
+            }
+            //for (int i = 1; i <= database.Orders.GetAll().Count(); i++)
+            //    list.Add(new OrderDTO
+            //    {
+            //        OrderDate = GetOrder(i).OrderDate,
+            //        Id = GetOrder(i).Id,
+            //        Amount = GetOrder(i).Amount,
+            //        Customer = GetOrder(i).Customer,
+            //        Price = GetOrder(i).Price,
+            //        Product = GetOrder(i).Product,
+            //        ShopAssistant = GetOrder(i).ShopAssistant
+            //    });
             return list.AsEnumerable();
         }
 

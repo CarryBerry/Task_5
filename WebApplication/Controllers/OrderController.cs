@@ -2,13 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.DataVisualization.Charting;
 using Task_4.DAL;
 using Task_4.DAL.Models;
 using WebApplication.Models;
 using WebApplication.Models.DTO;
+using SimpleChart = System.Web.Helpers;
 
 namespace WebApplication.Controllers
 {
@@ -119,41 +123,44 @@ namespace WebApplication.Controllers
         // POST: /Order/Create
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OrderDate, Cusomer, ShopAssistant, Amount, Price")]OrderDTO orderDTO)
+        public ActionResult Create([Bind(Include = "OrderDate, Customer, Product, ShopAssistant, Amount, Price")]OrderDTO orderDTO)
         {
-            IUnitOfWork database = new EFUnitOfWork();
+            Service service = new Service();
+            //IUnitOfWork database = new EFUnitOfWork();
 
-            var product = database.Products.GetIdByName(orderDTO.Product);
-            var customer = database.Customers.GetIdByName(orderDTO.Customer);
-            var shopAssistant = database.ShopAssistants.GetIdByName(orderDTO.ShopAssistant);
+            //var product = database.Products.GetIdByName(orderDTO.Product);
+            //var customer = database.Customers.GetIdByName(orderDTO.Customer);
+            //var shopAssistant = database.ShopAssistants.GetIdByName(orderDTO.ShopAssistant);
 
-            var order = new OrderDAL
-            {
-                OrderDate = DateTime.Now,
-                Id = orderDTO.Id,
-                Amount = orderDTO.Amount,
-                Price = orderDTO.Price,
-                CustomerId = customer.Value,
-                ProductId = product.Value,
-                ShopAssistantId = shopAssistant.Value
-            };
+            service.AddOrder(orderDTO);
+            //var order = new OrderDAL
+            //{
+            //    OrderDate = DateTime.Now,
+            //    Id = orderDTO.Id,
+            //    Amount = orderDTO.Amount,
+            //    Price = orderDTO.Price,
+            //    CustomerId = customer.Value,
+            //    ProductId = product.Value,
+            //    ShopAssistantId = shopAssistant.Value
+            //};
 
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    database.Orders.Insert(order);
-                    database.Orders.Save();
-                    return RedirectToAction("Index");
-                }
-            }
+            //try
+            //{
+            //    if (ModelState.IsValid)
+            //    {
+            //        database.Orders.Insert(order);
+            //        database.Orders.Save();
+            //        return RedirectToAction("Index");
+            //    }
+            //}
 
-            catch (DataException /* dex */)
-            {
-                //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
-                ModelState.AddModelError(string.Empty, "Unable to save changes. Try again, and if the problem persists contact your system administrator.");
-            }
+            //catch (DataException /* dex */)
+            //{
+            //    //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
+            //    ModelState.AddModelError(string.Empty, "Unable to save changes. Try again, and if the problem persists contact your system administrator.");
+            //}
 
             return View(orderDTO);
         }
@@ -172,8 +179,9 @@ namespace WebApplication.Controllers
         // POST: /Order/Edit/5
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OrderDate, Cusomer, ShopAssistant, Amount, Price")]OrderDTO orderDTO)
+        public ActionResult Edit([Bind(Include = "OrderDate, Customer, ShopAssistant, Amount, Price")]OrderDTO orderDTO)
         {
             IUnitOfWork database = new EFUnitOfWork();
 
@@ -229,29 +237,30 @@ namespace WebApplication.Controllers
         // POST: /Order/Delete/5
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            Service service = new Service();
+            //Service service = new Service();
             IUnitOfWork database = new EFUnitOfWork();
 
-            OrderDTO orderDTO = service.GetOrder(id);
+            //OrderDTO orderDTO = service.GetOrder(id);
 
-            var product = database.Products.GetIdByName(orderDTO.Product);
-            var customer = database.Customers.GetIdByName(orderDTO.Customer);
-            var shopAssistant = database.ShopAssistants.GetIdByName(orderDTO.ShopAssistant);
+            //var product = database.Products.GetIdByName(orderDTO.Product);
+            //var customer = database.Customers.GetIdByName(orderDTO.Customer);
+            //var shopAssistant = database.ShopAssistants.GetIdByName(orderDTO.ShopAssistant);
 
-            var order = new OrderDAL
-            {
-                OrderDate = orderDTO.OrderDate,
-                Id = orderDTO.Id,
-                Amount = orderDTO.Amount,
-                Price = orderDTO.Price,
-                CustomerId = customer.Value,
-                ProductId = product.Value,
-                ShopAssistantId = shopAssistant.Value
-            };
-            
+            //var order = new OrderDAL
+            //{
+            //    OrderDate = orderDTO.OrderDate,
+            //    Id = orderDTO.Id,
+            //    Amount = orderDTO.Amount,
+            //    Price = orderDTO.Price,
+            //    CustomerId = customer.Value,
+            //    ProductId = product.Value,
+            //    ShopAssistantId = shopAssistant.Value
+            //};
+
             try
             {
                 database.Orders.Delete(id);
@@ -265,6 +274,73 @@ namespace WebApplication.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult CreateSAAChart()
+        {
+            Service service = new Service();
+
+            int i = 0;
+
+            var orders = service.GetOrders().ToList();
+            IList<string> sanames = new List<string>();
+            IDictionary<int, double> amounts = new Dictionary<int, double>();
+
+            foreach (var o in orders)
+            {
+                if (sanames.Contains(o.ShopAssistant))
+                {
+                    amounts[sanames.IndexOf(o.ShopAssistant)] = amounts.Values.ElementAt((sanames.IndexOf(o.ShopAssistant))) + Convert.ToDouble(o.Amount);
+                }
+                else
+                {
+                    amounts.Add(i++, Convert.ToDouble(o.Amount));
+                    sanames.Add(o.ShopAssistant);
+                }
+            }
+            
+            var chart = new SimpleChart.Chart(width: 700, height: 300)
+             .AddTitle("Product sales of each shop assistant")
+             .AddSeries("Default",
+                    xValue: sanames, xField: "Name",
+                    yValues: amounts.Values, yFields: "Amount")
+             .Write();
+
+            return null;
+        }
+
+        public ActionResult CreateSAPChart()
+        {
+            Service service = new Service();
+            
+            var orders = service.GetOrders().ToList();
+
+            IList<string> sanames = new List<string>();
+            IDictionary<int, double> revenues = new Dictionary<int, double>();
+            
+            int i = 0;
+            foreach (var o in orders)
+            {
+                if (sanames.Contains(o.ShopAssistant))
+                {
+                    int bb = sanames.IndexOf(o.ShopAssistant) + 1;
+                    revenues[sanames.IndexOf(o.ShopAssistant)] = revenues.Values.ElementAt((sanames.IndexOf(o.ShopAssistant))) + o.Price;
+                }
+                else
+                {
+                    revenues.Add(i++, o.Price);
+                    sanames.Add(o.ShopAssistant);
+                }
+            }
+
+            var chart = new SimpleChart.Chart(width: 700, height: 300)
+             .AddTitle("Effectiveness of each shop assistant")
+             .AddSeries("Default",
+                    xValue: sanames, xField: "Name",
+                    yValues: revenues.Values, yFields: "Revenue")
+             .Write();
+
+            return null;
         }
 
         protected override void Dispose(bool disposing)

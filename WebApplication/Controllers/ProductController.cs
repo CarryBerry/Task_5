@@ -90,6 +90,7 @@ namespace WebApplication.Controllers
         // POST: /Customer/Create
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductName, ProductPrice")]ProductDTO productDTO)
         {
@@ -130,6 +131,7 @@ namespace WebApplication.Controllers
         // POST: /Customer/Edit/5
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ProductName, ProductPrice")]ProductDTO productDTO)
         {
@@ -174,15 +176,12 @@ namespace WebApplication.Controllers
         // POST: /Customer/Delete/5
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            Service service = new Service();
             IUnitOfWork database = new EFUnitOfWork();
-
-            ProductDTO productDTO = service.GetProduct(id);
-            var product = new ProductDAL { ProductName = productDTO.ProductName, Id = productDTO.Id, ProductPrice = productDTO.ProductPrice };
-
+            
             try
             {
                 database.Products.Delete(id);

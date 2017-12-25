@@ -81,6 +81,7 @@ namespace WebApplication.Controllers
         // POST: /ShopAssistant/Create
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ShopAssistantName")]ShopAssistantDTO shopAssistantDTO)
         {
@@ -121,6 +122,7 @@ namespace WebApplication.Controllers
         // POST: /ShopAssistant/Edit/5
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ShopAssistantName")]ShopAssistantDTO shopAssistanDTO)
         {
@@ -165,15 +167,12 @@ namespace WebApplication.Controllers
         // POST: /ShopAssistant/Delete/5
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            Service service = new Service();
             IUnitOfWork database = new EFUnitOfWork();
-
-            ShopAssistantDTO shopAssistanDTO = service.GetShopAssistant(id);
-            var shopAssistan = new ShopAssistantDAL { ShopAssistantName = shopAssistanDTO.ShopAssistantName, Id = shopAssistanDTO.Id };
-
+            
             try
             {
                 database.ShopAssistants.Delete(id);

@@ -76,8 +76,16 @@
             </td>
         </tr>
     }
-
 </table>
+
+<div>
+    <p>
+        @Html.ActionLink("Create Shop assistants - Amount Chart", "CreateSAAChart") |
+        @Html.ActionLink("Create Shop assistants - Revenue Chart", "CreateSAPChart") 
+    </p>
+</div>
+
+
 <br />
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 

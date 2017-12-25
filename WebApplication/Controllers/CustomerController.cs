@@ -15,7 +15,7 @@ using System.Data;
 namespace WebApplication.Controllers
 {
     public class CustomerController : Controller
-    {        
+    {
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             Service service = new Service();
@@ -63,7 +63,6 @@ namespace WebApplication.Controllers
 
         //
         // GET: /Customer/Details/5
-
         public ViewResult Details(int id)
         {
             Service service = new Service();
@@ -83,6 +82,7 @@ namespace WebApplication.Controllers
         // POST: /Customer/Create
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CustomerName")]CustomerDTO customerDTO)
         {
@@ -123,6 +123,7 @@ namespace WebApplication.Controllers
         // POST: /Customer/Edit/5
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CustomerName")]CustomerDTO customerDTO)
         {
@@ -167,14 +168,15 @@ namespace WebApplication.Controllers
         // POST: /Customer/Delete/5
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            Service service = new Service();
+            //Service service = new Service();
             IUnitOfWork database = new EFUnitOfWork();
 
-            CustomerDTO customerDTO = service.GetCustomer(id);
-            var customer = new CustomerDAL { CustomerName = customerDTO.CustomerName, Id = customerDTO.Id };
+            //CustomerDTO customerDTO = service.GetCustomer(id);
+            //var customer = new CustomerDAL { CustomerName = customerDTO.CustomerName, Id = customerDTO.Id };
 
             try
             {
@@ -190,6 +192,53 @@ namespace WebApplication.Controllers
 
             return RedirectToAction("Index");
         }
+
+        //public ActionResult CreateGraph(/*[Bind(Include = "OrderDate, Cusomer, ShopAssistant, Amount, Price")]*/OrderDTO orderDTO)
+        //{
+        //    //IUnitOfWork database = new EFUnitOfWork();
+        //    Service service = new Service();
+
+        //    //var product = database.Products.GetIdByName(orderDTO.Product);
+        //    //var customer = database.Customers.GetIdByName(orderDTO.Customer);
+        //    //var shopAssistant = database.ShopAssistants.GetIdByName(orderDTO.ShopAssistant);
+        //    var customers = service.GetCustomers();
+
+        //    //var order = new OrderDAL
+        //    //{
+        //    //    OrderDate = orderDTO.OrderDate,
+        //    //    Id = orderDTO.Id,
+        //    //    Amount = orderDTO.Amount,
+        //    //    Price = orderDTO.Price,
+        //    //    CustomerId = customer.Value,
+        //    //    ProductId = product.Value,
+        //    //    ShopAssistantId = shopAssistant.Value
+        //    //};
+
+        //    var chart = new Chart(width: 700, height: 300)
+        //     .AddTitle("Customers")
+        //     .AddSeries(
+        //            name: "Customers",
+        //            legend: "Id",
+        //            chartType: "Line",
+        //            xValue: customers, xField: "Id",
+        //            yValues: customers, yFields: "CustomerName")
+        //     .Write();
+
+        //    return View(chart);
+
+        //    //@using WebApplication.Models.DTO;
+        //    //@using PagedList.Mvc;
+        //    //@model IEnumerable< OrderDTO >
+        //    //    var myChart = new Chart(width: 600, height: 400)
+        //    //        .AddTitle("Product Sales")
+        //    //        .AddSeries("Default",
+        //    //    xValue: Model, xField: "Id",
+        //    //    yValues: Model, yFields: "Price")
+        //    //        .Write();
+        //    //}
+
+        //    //return View(orderDTO);
+        //}
 
         protected override void Dispose(bool disposing)
         {
