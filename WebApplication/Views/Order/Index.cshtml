@@ -19,23 +19,24 @@
         <input type="submit" value="Search" />
     </p>
 }
+
 <table>
     <tr>
         <th></th>
-        <th>
+        <th> 
             @Html.ActionLink("Id", "Index", new { sortOrder = ViewBag.IdSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
-        <th>
-            @Html.ActionLink("OrderDate", "Index", new { sortOrder = ViewBag.OrderDateSortParam, currentFilter = ViewBag.CurrentFilter })
+        <th >
+            @Html.ActionLink("Order Date", "Index", new { sortOrder = ViewBag.OrderDateSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("CustomerName", "Index", new { sortOrder = ViewBag.CustomerNameSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("Customer", "Index", new { sortOrder = ViewBag.CustomerNameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("ShopAssistantName", "Index", new { sortOrder = ViewBag.ShopAssistantNameSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("Shop Assistant", "Index", new { sortOrder = ViewBag.ShopAssistantNameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.ActionLink("ProductName", "Index", new { sortOrder = ViewBag.ProductNameSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("Product", "Index", new { sortOrder = ViewBag.ProductNameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             @Html.ActionLink("Amount", "Index", new { sortOrder = ViewBag.AmountSortParm, currentFilter = ViewBag.CurrentFilter })
@@ -80,8 +81,9 @@
 
 <div>
     <p>
-        @Html.ActionLink("Create Shop assistants - Amount Chart", "CreateSAAChart") |
-        @Html.ActionLink("Create Shop assistants - Revenue Chart", "CreateSAPChart") 
+        @Html.ActionLink("Product sales of each shop assistant", "CreateSAAChart") |
+        @Html.ActionLink("Effectiveness of each shop assistant", "CreateSAPChart") | 
+        @Html.ActionLink("Sales per day", "CreateODAChart")
     </p>
 </div>
 

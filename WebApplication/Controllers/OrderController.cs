@@ -343,6 +343,41 @@ namespace WebApplication.Controllers
             return null;
         }
 
+        public ActionResult CreateODAChart()
+        {
+            Service service = new Service();
+
+            var orders = service.GetOrders().ToList();
+
+            IList<int> orderdates = new List<int>();
+            IDictionary<int, double> amounts = new Dictionary<int, double>();
+
+            int i = 0;
+            foreach (var o in orders)
+            {
+                if (orderdates.Contains(o.OrderDate.Day))
+                {
+                    int bb = orderdates.IndexOf(o.OrderDate.Day) + 1;
+                    amounts[orderdates.IndexOf(o.OrderDate.Day)] = amounts.Values.ElementAt((orderdates.IndexOf(o.OrderDate.Day))) + o.Amount;
+                }
+                else
+                {
+                    orderdates.Add(o.OrderDate.Day);
+                    amounts.Add(i++, o.Amount);
+                }
+            }
+
+            var chart = new SimpleChart.Chart(width: 700, height: 300)
+             .AddTitle("Sales per day")
+             .AddSeries(
+                    chartType: "Line",
+                    xValue: orderdates, xField: "Day",
+                    yValues: amounts.Values, yFields: "Sales")
+             .Write();
+
+            return null;
+        }
+
         protected override void Dispose(bool disposing)
         {
             IUnitOfWork database = new EFUnitOfWork();

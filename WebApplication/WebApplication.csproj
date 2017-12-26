@@ -388,6 +388,7 @@
     <Content Include="Views\Customer\CreateGraph.cshtml" />
     <Content Include="Views\Order\CreateSAAChart.cshtml" />
     <Content Include="Views\Order\CreateSAPChart.cshtml" />
+    <Content Include="Views\Order\CreateODAChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
