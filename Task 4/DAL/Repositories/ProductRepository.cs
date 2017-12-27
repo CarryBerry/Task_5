@@ -91,8 +91,8 @@ namespace Task_4.DAL.Repositories
 
         public void Update(ProductDAL item)
         {
-            context.Products.AddOrUpdate(ToEntity(item));
-            //context.Entry(ToEntity(item)).State = EntityState.Modified;
+            //context.Products.AddOrUpdate(ToEntity(item));
+            context.Entry(ToEntity(item)).State = EntityState.Modified;
         }
 
         public void Delete(int id)

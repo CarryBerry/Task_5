@@ -95,8 +95,8 @@ namespace Task_4.DAL.Repositories
 
         public void Update(ShopAssistantDAL item) 
         {
-            context.ShopAssistants.AddOrUpdate(ToEntity(item));
-            //context.Entry(ToEntity(item)).State = EntityState.Modified;
+            //context.ShopAssistants.AddOrUpdate(ToEntity(item));
+            context.Entry(ToEntity(item)).State = EntityState.Modified;
         }
 
         public void Save()

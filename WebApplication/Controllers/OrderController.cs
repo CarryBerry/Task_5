@@ -128,39 +128,18 @@ namespace WebApplication.Controllers
         public ActionResult Create([Bind(Include = "OrderDate, Customer, Product, ShopAssistant, Amount, Price")]OrderDTO orderDTO)
         {
             Service service = new Service();
-            //IUnitOfWork database = new EFUnitOfWork();
 
-            //var product = database.Products.GetIdByName(orderDTO.Product);
-            //var customer = database.Customers.GetIdByName(orderDTO.Customer);
-            //var shopAssistant = database.ShopAssistants.GetIdByName(orderDTO.ShopAssistant);
+            try
+            {
+                service.AddOrder(orderDTO);
+                return RedirectToAction("Index");
+            }
 
-            service.AddOrder(orderDTO);
-            //var order = new OrderDAL
-            //{
-            //    OrderDate = DateTime.Now,
-            //    Id = orderDTO.Id,
-            //    Amount = orderDTO.Amount,
-            //    Price = orderDTO.Price,
-            //    CustomerId = customer.Value,
-            //    ProductId = product.Value,
-            //    ShopAssistantId = shopAssistant.Value
-            //};
-
-            //try
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        database.Orders.Insert(order);
-            //        database.Orders.Save();
-            //        return RedirectToAction("Index");
-            //    }
-            //}
-
-            //catch (DataException /* dex */)
-            //{
-            //    //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
-            //    ModelState.AddModelError(string.Empty, "Unable to save changes. Try again, and if the problem persists contact your system administrator.");
-            //}
+            catch (DataException /* dex */)
+            {
+                //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
+                ModelState.AddModelError(string.Empty, "Unable to save changes. Try again, and if the problem persists contact your system administrator.");
+            }
 
             return View(orderDTO);
         }
@@ -181,7 +160,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OrderDate, Customer, ShopAssistant, Amount, Price")]OrderDTO orderDTO)
+        public ActionResult Edit([Bind(Include = "Id, OrderDate, Customer, ShopAssistant, Amount, Price")]OrderDTO orderDTO)
         {
             IUnitOfWork database = new EFUnitOfWork();
 

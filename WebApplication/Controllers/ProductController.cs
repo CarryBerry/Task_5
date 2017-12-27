@@ -133,7 +133,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductName, ProductPrice")]ProductDTO productDTO)
+        public ActionResult Edit([Bind(Include = "Id, ProductName, ProductPrice")]ProductDTO productDTO)
         {
             IUnitOfWork database = new EFUnitOfWork();
 

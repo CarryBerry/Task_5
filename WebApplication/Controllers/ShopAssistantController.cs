@@ -124,7 +124,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ShopAssistantName")]ShopAssistantDTO shopAssistanDTO)
+        public ActionResult Edit([Bind(Include = "Id, ShopAssistantName")]ShopAssistantDTO shopAssistanDTO)
         {
             IUnitOfWork database = new EFUnitOfWork();
 

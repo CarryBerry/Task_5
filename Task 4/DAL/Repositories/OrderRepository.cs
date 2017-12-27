@@ -81,7 +81,8 @@ namespace Task_4.DAL.Repositories
 
         public void Update(OrderDAL item)
         {
-            context.Orders.AddOrUpdate(ToEntity(item));
+            //context.Orders.AddOrUpdate(ToEntity(item));
+            context.Entry(ToEntity(item)).State = EntityState.Modified;
         }
 
         public void Delete(int id)

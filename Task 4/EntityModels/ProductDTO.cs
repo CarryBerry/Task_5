@@ -17,7 +17,7 @@ namespace Task_4.Models
         [Display(Name = "Product's Name")]
         public string ProductName { get; set; }
 
-        [Range(0.1, 100)]
+        [Range(0.1, 1000)]
         public double ProductPrice { get; set; }
 
         public ICollection<Order> Orders { get; set; }

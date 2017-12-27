@@ -113,8 +113,8 @@ namespace Task_4.DAL.Repositories
 
         public void Update(CustomerDAL item)
         {
-            context.Customers.AddOrUpdate(ToEntity(item));
-            //context.Entry(ToEntity(item)).State = EntityState.Modified;
+            //context.Customers.AddOrUpdate(ToEntity(item));
+            context.Entry(ToEntity(item)).State = EntityState.Modified;
         }
 
         public void Save()
