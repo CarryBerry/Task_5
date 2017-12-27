@@ -13,26 +13,20 @@
     <legend>ShopAssistant</legend>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => Model.Id)
+        <strong>@Html.DisplayNameFor(model => Model.Id)</strong>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => Model.Id)
     </div>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => Model.ShopAssistantName)
+        <strong>@Html.DisplayNameFor(model => Model.ShopAssistantName)</strong>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => Model.ShopAssistantName)
     </div>
-
-    @*<div class="display-label">
-        @Html.DisplayNameFor(model => Model.CustomerName)
-    </div>*@
-    @*<div class="display-field">
-        @Html.DisplayFor(model => Model.CustomerName)
-    </div>*@
 </fieldset>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

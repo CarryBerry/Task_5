@@ -23,33 +23,8 @@
     <div class="display-field">
         @Html.DisplayFor(model => Model.CustomerName)
     </div>
-
-    @*<div class="display-field">
-        <table>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-            </tr>
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.CustomerName)
-                    </td>
-                </tr>
-            }
-        </table>
-    </div>*@
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
-@*<div class="display-label">
-        @Html.DisplayNameFor(model => Model.CustomerName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => Model.CustomerName)
-    </div>*@

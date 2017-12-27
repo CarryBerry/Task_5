@@ -13,25 +13,19 @@
     <legend>Customer</legend>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => Model.Id)
+        <strong>@Html.DisplayNameFor(model => Model.Id)</strong> 
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => Model.Id)
     </div>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => Model.CustomerName)
+        <strong>@Html.DisplayNameFor(model => Model.CustomerName)</strong>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => Model.CustomerName)
     </div>
 
-    @*<div class="display-label">
-        @Html.DisplayNameFor(model => Model.CustomerName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => Model.CustomerName)
-    </div>*@
 </fieldset>
 @using (Html.BeginForm())
 {

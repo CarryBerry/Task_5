@@ -13,25 +13,26 @@
     <legend>Product</legend>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => Model.Id)
+        <strong>@Html.DisplayNameFor(model => Model.Id)</strong>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => Model.Id)
     </div>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => Model.ProductName)
+        <strong>@Html.DisplayNameFor(model => Model.ProductName)</strong>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => Model.ProductName)
     </div>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => Model.ProductPrice)
+        <strong>@Html.DisplayNameFor(model => Model.ProductPrice)</strong>
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => Model.ProductPrice)
     </div>
+
 </fieldset>
 @using (Html.BeginForm())
 {
